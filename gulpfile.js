@@ -13,10 +13,17 @@ var config = {
   }
 };
 
+//copy src to dist
+gulp.task('html', function(done) {
+  gulp.src([config.paths.html])
+      .pipe(gulp.dest(config.paths.dist))
+  done();
+});
+
 //start a local development server
 gulp.task('connect', function(done) {
   connect.server({
-    root: ['src'],
+    root: ['dist'],
     port: config.port,
     base: config.devBaseUrl,
     livereload: true
@@ -24,17 +31,21 @@ gulp.task('connect', function(done) {
   done();
 });
 
-gulp.task('open', function(done) {
-  gulp.src('src/index.html')
-      .pipe(open({ uri: config.devBaseUrl + ':' + config.port}));
+//monitor the src folder and reload on changes
+gulp.task('watch', function(done) {
+  gulp.watch(config.paths.html, function() {
+    return gulp.src([config.paths.html])
+               .pipe(gulp.dest(config.paths.dist))
+               .pipe(connect.reload());
+  });
   done();
 });
 
-gulp.task('html', function(done) {
-  gulp.src(config.paths.html)
-      .pipe(gulp.dest(config.paths.dist))
-      .pipe(connect.reload());
-  done();
-});
+//open the site in the default browser
+// gulp.task('open', function(done) {
+//   gulp.src('dist/index.html')
+//       .pipe(open({ uri: config.devBaseUrl + ':' + config.port}));
+//   done();
+// });
 
-gulp.task('default', gulp.series('connect', 'open'));
+gulp.task('default', gulp.series('html', 'connect', 'watch'));

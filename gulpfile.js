@@ -14,6 +14,7 @@ var config = {
   paths: {
     html: './src/*.html',
     js: './src/**/*.js',
+    images: './src/images/*',
     css: [
       'node_modules/bootstrap/dist/css/bootstrap.min.css',
       'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
@@ -54,6 +55,13 @@ var cssFunction = () => {
 
 gulp.task('css', cssFunction);
 
+//copy images to the dist folder
+gulp.task('images', function(done) {
+  gulp.src(config.paths.images)
+      .pipe(gulp.dest(config.paths.dist + '/images'));
+  done();
+})
+
 //start a local development server
 gulp.task('connect', function(done) {
   connect.server({
@@ -79,4 +87,4 @@ gulp.task('watch', function(done) {
 //   done();
 // });
 
-gulp.task('default', gulp.series('html', 'js', 'css', 'connect', 'watch'));
+gulp.task('default', gulp.series('html', 'js', 'css', 'images', 'connect', 'watch'));

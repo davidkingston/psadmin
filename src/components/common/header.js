@@ -11,7 +11,7 @@ var Header = React.createClass({
             <img src="images/star-thumbs-up.jpg" width="25px" />
           </a>
           <ul className="nav navbar-nav">
-            <li><a href="/">Home</a></li>
+            <li><a href="/#">Home</a></li>
             <li><a href="/#about">About</a></li>
           </ul>
         </div>

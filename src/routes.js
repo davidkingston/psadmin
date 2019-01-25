@@ -17,6 +17,8 @@ var routes = (
     <NotFoundRoute handler={require('./components/notFound')} />
     <Redirect from="about-us" to="about" />  // for retired urls
     <Redirect from="awthurs" to="authors" />  // for commonly mispelled words
+    <Redirect from="about/*" to="about" />  // wildcards
+    <Redirect from="about*" to="about" />  // wildcards
   </Route>
 );
 

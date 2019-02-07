@@ -11,10 +11,19 @@ var ManageAuthorPage = React.createClass({
     Router.Navigation
   ],
 
+  statics: {
+    willTransitionFrom: function(transition, component) {
+      if (component.state.dirty && !confirm('If you leave this page now, you\'ll lose any unsaved work.  Are you sure you want to leave?')) {
+        transition.abort();
+      }
+    }
+  },
+
   getInitialState: function() {
     return {
       author: {id: '', firstName: '', lastName: ''},
-      errors: {}
+      errors: {},
+      dirty: false
     };
   },
 
@@ -24,7 +33,8 @@ var ManageAuthorPage = React.createClass({
     console.log("field = " + field);
     console.log("value = " + value);
     this.state.author[field] = value;
-    return this.setState({author: this.state.author});
+    var dirty = value.length > 0;
+    return this.setState({author: this.state.author, dirty: dirty});
   },
 
   authorFormIsValid: function() {
@@ -53,6 +63,7 @@ var ManageAuthorPage = React.createClass({
     }
 
     AuthorApi.saveAuthor(this.state.author);
+    this.setState({dirty: true});
     toastr.success('Author saved.');
     this.transitionTo('authors');
   },

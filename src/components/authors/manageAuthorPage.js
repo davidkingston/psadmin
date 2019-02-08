@@ -27,6 +27,14 @@ var ManageAuthorPage = React.createClass({
     };
   },
 
+  componentWillMount: function() {
+    var authorId = this.props.params.authorId; // automatically injected by the Route from the path '/author:authorId'
+
+    if (authorId) {
+      this.setState({author: AuthorApi.getAuthorById(authorId)});  // calling setState here instead of in componentDidMount won't cause a re-render
+    }
+  },
+
   setAuthorState: function(event) {
     var field = event.target.name;
     var value = event.target.value;
@@ -63,7 +71,7 @@ var ManageAuthorPage = React.createClass({
     }
 
     AuthorApi.saveAuthor(this.state.author);
-    this.setState({dirty: true});
+    this.setState({dirty: false});
     toastr.success('Author saved.');
     this.transitionTo('authors');
   },

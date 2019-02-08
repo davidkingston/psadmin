@@ -20,7 +20,7 @@ var AuthorForm = React.createClass({
           label="First Name"
           onChange={this.props.onChange}
           placeholder="First Name"
-          value={this.props.firstName}
+          value={this.props.author.firstName}
           error={this.props.errors.firstName}
             />
 
@@ -29,7 +29,7 @@ var AuthorForm = React.createClass({
           label="Last Name"
           onChange={this.props.onChange}
           placeholder="Last Name"
-          value={this.props.lastName}
+          value={this.props.author.lastName}
           error={this.props.errors.lastName}
             />
 

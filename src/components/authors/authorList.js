@@ -13,7 +13,7 @@ var AuthorList = React.createClass({
     var createAuthorRow = function(author) {
       return (
         <tr key={author.id}>
-          <td><Link to="author" params={{authorId: author.id}}>{author.id}</Link></td>
+          <td><Link to="editAuthor" params={{authorId: author.id}}>{author.id}</Link></td>
           <td>{author.firstName} {author.lastName}</td>
         </tr>
       );
